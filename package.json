@@ -1,0 +1,27 @@
+{
+  "name": "desktop-clock",
+  "productName": "Cclock",
+  "version": "1.2.0",
+  "description": "Cclock —— 跨时区桌面时钟 · 中式月历 · 待办悬浮窗",
+  "author": "AI创赛贯通社",
+  "license": "MIT",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "icons": "node scripts/gen-icons.js",
+    "build": "vite build",
+    "start": "npm run build && electron .",
+    "dist": "npm run icons && npm run build && node scripts/dist.js",
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "lunar-javascript": "^1.7.4",
+    "luxon": "^3.7.2"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12",
+    "vite": "^7.0.0"
+  }
+}

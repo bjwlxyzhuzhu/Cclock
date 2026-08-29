@@ -1,0 +1,30 @@
+appId: com.aichuangsai.cclock
+productName: Cclock
+copyright: Copyright © 2026 AI创赛贯通社
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - electron/**/*
+  - dist/**/*
+  - package.json
+  - '!**/*.map'
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.ico
+  artifactName: Cclock-${version}-setup.${ext}
+
+nsis:
+  include: build/installer.nsh
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Cclock
+  deleteAppDataOnUninstall: false

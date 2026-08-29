@@ -1,0 +1,296 @@
+/*
+ * 6 套主题，全部通过 CSS 变量切换：
+ *   sky / dusk / dark / grass / huangzhong / plain / custom（用户上传的图片）
+ *
+ * 透明度实现要点：绝不用 win.setOpacity()（会把文字一起变淡）。
+ * 只有 .card__bg 这一层背景应用 --bg-opacity，文字层始终完全不透明。
+ */
+
+:root {
+  --bg-opacity: 0.85;
+
+  /* 主题装饰层（只有 huangzhong 用到），默认不画 */
+  --bg-art: none;
+  --bg-art-opacity: 0;
+  --bg-art-size: 240px auto;
+  --bg-art-pos: right -20px top 40px;
+
+  --radius: 12px;
+  --pad: 14px;
+
+  --font-ui: 'Microsoft YaHei UI', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Consolas', 'DejaVu Sans Mono', monospace;
+}
+
+/* ---------------- sky（默认）：参考图的青蓝天空 ---------------- */
+:root,
+:root[data-theme='sky'] {
+  --bg: linear-gradient(170deg, #6f9fbe 0%, #97bcd0 38%, #bcd2dc 68%, #d7dfe2 100%);
+  --bg-glow: radial-gradient(120% 60% at 70% 8%, rgba(255, 255, 255, 0.45), transparent 60%);
+
+  --text: #16324a;
+  --text-dim: rgba(21, 48, 71, 0.66);
+  --text-faint: rgba(21, 48, 71, 0.42);
+
+  --clock: #ffffff;
+  --clock-shadow: 0 2px 10px rgba(20, 45, 70, 0.28);
+
+  --accent: #1c6ea4;
+  --accent-soft: rgba(28, 110, 164, 0.16);
+  --on-accent: #ffffff;
+
+  --line: rgba(21, 48, 71, 0.16);
+  --hover: rgba(255, 255, 255, 0.34);
+  --surface: rgba(255, 255, 255, 0.24);
+
+  --warn: #c26a12;
+  --warn-soft: rgba(214, 126, 30, 0.18);
+  --danger: #c0392b;
+  --danger-soft: rgba(192, 57, 43, 0.14);
+  --rest: #1f7a4d;
+  --rest-soft: rgba(31, 122, 77, 0.18);
+  --work: #b96a10;
+  --work-soft: rgba(185, 106, 16, 0.18);
+  --weekend: rgba(21, 48, 71, 0.45);
+
+  --shadow: 0 10px 34px rgba(12, 30, 48, 0.32);
+}
+
+/* ---------------- dusk：暖橙紫晚霞 ---------------- */
+:root[data-theme='dusk'] {
+  --bg: linear-gradient(168deg, #4a3560 0%, #8b4a63 42%, #c9724f 76%, #e0a06a 100%);
+  --bg-glow: radial-gradient(120% 60% at 76% 10%, rgba(255, 220, 180, 0.34), transparent 62%);
+
+  --text: #fdf1e6;
+  --text-dim: rgba(253, 241, 230, 0.7);
+  --text-faint: rgba(253, 241, 230, 0.45);
+
+  --clock: #ffffff;
+  --clock-shadow: 0 2px 12px rgba(60, 20, 40, 0.42);
+
+  --accent: #ffb37a;
+  --accent-soft: rgba(255, 179, 122, 0.22);
+  --on-accent: #4a2416;
+
+  --line: rgba(255, 235, 220, 0.18);
+  --hover: rgba(255, 255, 255, 0.14);
+  --surface: rgba(255, 255, 255, 0.09);
+
+  --warn: #ffc17a;
+  --warn-soft: rgba(255, 193, 122, 0.2);
+  --danger: #ff8a75;
+  --danger-soft: rgba(255, 138, 117, 0.18);
+  --rest: #9fdcb0;
+  --rest-soft: rgba(159, 220, 176, 0.18);
+  --work: #ffcb8a;
+  --work-soft: rgba(255, 203, 138, 0.18);
+  --weekend: rgba(253, 241, 230, 0.5);
+
+  --shadow: 0 10px 34px rgba(30, 12, 26, 0.46);
+}
+
+/* ---------------- dark：深灰近黑 + 弱蓝强调 ---------------- */
+:root[data-theme='dark'] {
+  --bg: linear-gradient(172deg, #171b21 0%, #1c222a 55%, #222932 100%);
+  --bg-glow: radial-gradient(120% 55% at 72% 6%, rgba(110, 168, 220, 0.12), transparent 62%);
+
+  --text: #e6ecf3;
+  --text-dim: rgba(230, 236, 243, 0.66);
+  --text-faint: rgba(230, 236, 243, 0.4);
+
+  --clock: #f4f8fc;
+  --clock-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+
+  --accent: #6ea8dc;
+  --accent-soft: rgba(110, 168, 220, 0.2);
+  --on-accent: #0f1620;
+
+  --line: rgba(230, 236, 243, 0.12);
+  --hover: rgba(255, 255, 255, 0.07);
+  --surface: rgba(255, 255, 255, 0.05);
+
+  --warn: #e8a75c;
+  --warn-soft: rgba(232, 167, 92, 0.16);
+  --danger: #e8756b;
+  --danger-soft: rgba(232, 117, 107, 0.16);
+  --rest: #6fc79a;
+  --rest-soft: rgba(111, 199, 154, 0.16);
+  --work: #e0a866;
+  --work-soft: rgba(224, 168, 102, 0.16);
+  --weekend: rgba(230, 236, 243, 0.42);
+
+  --shadow: 0 10px 34px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------------- grass：草绿，清爽自然 ---------------- */
+:root[data-theme='grass'] {
+  --bg: linear-gradient(168deg, #4f9152 0%, #7cb865 38%, #aed692 70%, #d9ebc2 100%);
+  --bg-glow: radial-gradient(120% 60% at 72% 8%, rgba(255, 255, 255, 0.42), transparent 62%);
+
+  --text: #1c3a20;
+  --text-dim: rgba(28, 58, 32, 0.66);
+  --text-faint: rgba(28, 58, 32, 0.42);
+
+  --clock: #ffffff;
+  --clock-shadow: 0 2px 10px rgba(20, 56, 26, 0.3);
+
+  --accent: #2b7a38;
+  --accent-soft: rgba(43, 122, 56, 0.18);
+  --on-accent: #ffffff;
+
+  --line: rgba(28, 58, 32, 0.16);
+  --hover: rgba(255, 255, 255, 0.34);
+  --surface: rgba(255, 255, 255, 0.26);
+
+  --warn: #b06a12;
+  --warn-soft: rgba(200, 122, 26, 0.18);
+  --danger: #b23a2c;
+  --danger-soft: rgba(178, 58, 44, 0.14);
+  --rest: #1c6b3f;
+  --rest-soft: rgba(28, 107, 63, 0.18);
+  --work: #a8630f;
+  --work-soft: rgba(168, 99, 15, 0.18);
+  --weekend: rgba(28, 58, 32, 0.45);
+
+  --shadow: 0 10px 34px rgba(16, 44, 20, 0.32);
+}
+
+/* ---------------- huangzhong：原创「黄忠·战弓」皮肤 ----------------
+ * 暗红鎏金的战场配色 + 自绘的射手剪影与弓箭纹样。
+ * 注意：这是原创图形，不含任何官方游戏美术素材。
+ */
+:root[data-theme='huangzhong'] {
+  --bg: linear-gradient(163deg, #1a0507 0%, #45100f 30%, #7a2714 58%, #b5641f 82%, #d99a3c 100%);
+  --bg-glow: radial-gradient(105% 50% at 26% 4%, rgba(255, 208, 128, 0.2), transparent 58%),
+    radial-gradient(70% 36% at 90% 94%, rgba(255, 150, 50, 0.16), transparent 60%);
+  --bg-art: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 190 210'%3E%3Cg stroke='%23ffd9a0' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M152 16 C180 58 180 142 152 184' stroke-width='6'/%3E%3Cpath d='M152 16 L120 100 L152 184' stroke-width='1.8'/%3E%3Cpath d='M74 100 H158' stroke-width='2.6'/%3E%3Cpath d='M158 100 l-11 -6 M158 100 l-11 6' stroke-width='2.6'/%3E%3Cpath d='M79 100 l11 -7 M79 100 l11 7' stroke-width='1.8'/%3E%3Cpath d='M66 66 L70 118' stroke-width='15'/%3E%3Cpath d='M72 82 L148 99' stroke-width='7'/%3E%3Cpath d='M68 80 L96 74 L119 99' stroke-width='6'/%3E%3Cpath d='M70 118 L96 150 L106 186' stroke-width='7'/%3E%3Cpath d='M68 118 L44 152 L32 184' stroke-width='7'/%3E%3C/g%3E%3Cg fill='%23ffd9a0'%3E%3Ccircle cx='64' cy='48' r='11'/%3E%3Cpath d='M55 56 q9 16 18 0 q-2 20 -9 24 q-7 -6 -9 -24 z'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-art-opacity: 0.2;
+  --bg-art-size: 158px auto;
+  --bg-art-pos: right -12px bottom 6px;
+
+  --text: #f7e8cd;
+  --text-dim: rgba(247, 232, 205, 0.7);
+  --text-faint: rgba(247, 232, 205, 0.44);
+
+  --clock: #ffd98a;
+  --clock-shadow: 0 2px 14px rgba(80, 20, 10, 0.6);
+
+  --accent: #e8b455;
+  --accent-soft: rgba(232, 180, 85, 0.22);
+  --on-accent: #35150a;
+
+  --line: rgba(247, 220, 180, 0.18);
+  --hover: rgba(255, 214, 140, 0.13);
+  --surface: rgba(255, 214, 140, 0.09);
+
+  --warn: #ffc774;
+  --warn-soft: rgba(255, 199, 116, 0.2);
+  --danger: #ff8f76;
+  --danger-soft: rgba(255, 143, 118, 0.18);
+  --rest: #9fd8a8;
+  --rest-soft: rgba(159, 216, 168, 0.18);
+  --work: #ffcf8d;
+  --work-soft: rgba(255, 207, 141, 0.18);
+  --weekend: rgba(247, 232, 205, 0.5);
+
+  --shadow: 0 10px 34px rgba(24, 6, 6, 0.55);
+}
+
+/* ---------------- custom：用户自己上传的背景图 ----------------
+ * --bg 由渲染层在运行时改写成 url(data:image/png;...) center/cover。
+ * 因为图片内容不可预知，文字统一用白色 + 投影，并在 --bg-glow 里压一层
+ * 上下渐变的暗罩，保证任何图上文字都读得清。
+ */
+:root[data-theme='custom'] {
+  --bg: linear-gradient(170deg, #6f9fbe, #d7dfe2);
+  /* 图片内容不可预知，压一层足够重的暗罩保证任何图上都读得清 */
+  --bg-glow: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.52) 0%,
+    rgba(0, 0, 0, 0.34) 26%,
+    rgba(0, 0, 0, 0.38) 62%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+
+  --text: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.8);
+  --text-faint: rgba(255, 255, 255, 0.55);
+
+  --clock: #ffffff;
+  --clock-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+
+  --accent: #ffffff;
+  --accent-soft: rgba(255, 255, 255, 0.24);
+  --on-accent: #1a2a38;
+
+  --line: rgba(255, 255, 255, 0.24);
+  --hover: rgba(255, 255, 255, 0.18);
+  --surface: rgba(255, 255, 255, 0.16);
+
+  --warn: #ffca7a;
+  --warn-soft: rgba(255, 202, 122, 0.24);
+  --danger: #ff9384;
+  --danger-soft: rgba(255, 147, 132, 0.24);
+  --rest: #a5e0b5;
+  --rest-soft: rgba(165, 224, 181, 0.24);
+  --work: #ffd08a;
+  --work-soft: rgba(255, 208, 138, 0.24);
+  --weekend: rgba(255, 255, 255, 0.62);
+
+  --shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------------- plain：无渐变纯色，跟随系统明暗，最省资源 ---------------- */
+:root[data-theme='plain'] {
+  --bg: #f2f4f6;
+  --bg-glow: none;
+
+  --text: #1f2933;
+  --text-dim: rgba(31, 41, 51, 0.66);
+  --text-faint: rgba(31, 41, 51, 0.42);
+
+  --clock: #1f2933;
+  --clock-shadow: none;
+
+  --accent: #2c6ea4;
+  --accent-soft: rgba(44, 110, 164, 0.14);
+  --on-accent: #ffffff;
+
+  --line: rgba(31, 41, 51, 0.14);
+  --hover: rgba(31, 41, 51, 0.06);
+  --surface: rgba(31, 41, 51, 0.04);
+
+  --warn: #b3690f;
+  --warn-soft: rgba(179, 105, 15, 0.14);
+  --danger: #b23c2f;
+  --danger-soft: rgba(178, 60, 47, 0.12);
+  --rest: #1c7048;
+  --rest-soft: rgba(28, 112, 72, 0.14);
+  --work: #a9640f;
+  --work-soft: rgba(169, 100, 15, 0.14);
+  --weekend: rgba(31, 41, 51, 0.45);
+
+  --shadow: 0 8px 26px rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='plain'] {
+    --bg: #1e2226;
+    --text: #e6eaee;
+    --text-dim: rgba(230, 234, 238, 0.66);
+    --text-faint: rgba(230, 234, 238, 0.4);
+    --clock: #f0f4f8;
+    --accent: #7fb2e0;
+    --accent-soft: rgba(127, 178, 224, 0.18);
+    --on-accent: #14191e;
+    --line: rgba(230, 234, 238, 0.12);
+    --hover: rgba(255, 255, 255, 0.06);
+    --surface: rgba(255, 255, 255, 0.04);
+    --warn: #e0a05c;
+    --danger: #e07a6e;
+    --rest: #6cc396;
+    --work: #d9a263;
+    --weekend: rgba(230, 234, 238, 0.42);
+    --shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
+  }
+}
