@@ -1,12 +1,12 @@
 # Cclock
 
-常驻 Windows 桌面的无边框悬浮小窗，把**跨时区时间**、**中式月历**、**带时间的待办**压在一个竖长条里。
+常驻桌面的无边框悬浮小窗，把**跨时区时间**、**中式月历**、**带时间的待办**压在一个竖长条里。
 
 **完全离线**：没有后端、没有数据库、不发任何网络请求。
 
-- 版本：1.2.0
+- 版本：1.2.1
 - 开发者：**AI创赛贯通社**
-- 平台：Windows 10 / 11（x64）
+- 平台：Windows 10 / 11（x64）· macOS 12 及以上（Apple 芯片与 Intel）
 - 实现依据：[PRD.md](PRD.md)
 
 ![Cclock 主界面](docs/screenshot-sky.png)
@@ -49,9 +49,13 @@ Cclock 的第一性原则：
 
 ## 安装
 
-从 [GitHub Releases 下载 Cclock 1.2.0 安装包](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.0/Cclock-1.2.0-setup.exe)，然后：
+所有安装包都在 [Releases](https://github.com/bjwlxyzhuzhu/Cclock/releases/latest) 页面，附 SHA256 校验值。
 
-1. 双击 `Cclock-1.2.0-setup.exe`
+### Windows
+
+下载 [`Cclock-1.2.1-setup.exe`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.1/Cclock-1.2.1-setup.exe)，然后：
+
+1. 双击 `Cclock-1.2.1-setup.exe`
 2. 选择安装目录（默认 `%LOCALAPPDATA%\Programs\Cclock`），**不需要管理员权限**
 3. 安装完成后自动启动，并在桌面和开始菜单创建快捷方式
 
@@ -61,6 +65,31 @@ Cclock 的第一性原则：
 
 **卸载**：控制面板 → 程序和功能 → Cclock。卸载会一并清掉开机自启的注册表项，
 但**不会删除你的数据**（见[数据与备份](#数据与备份)）。
+
+### macOS
+
+| 文件 | 适用 |
+| --- | --- |
+| [`Cclock-1.2.1-mac-arm64.dmg`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.1/Cclock-1.2.1-mac-arm64.dmg) | Apple 芯片（M1 / M2 / M3 / M4） |
+| [`Cclock-1.2.1-mac-x64.dmg`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.1/Cclock-1.2.1-mac-x64.dmg) | Intel 芯片 |
+
+不确定是哪种：左上角苹果菜单 →「关于本机」，「芯片」一栏写 Apple M 开头的选 arm64，写 Intel 的选 x64。
+
+**第一次打开会被系统拦下，这是正常的。** 安装包没有 Apple 开发者证书，只做了 ad-hoc 签名：
+
+1. 打开 dmg，把 Cclock 拖进「应用程序」；
+2. 双击打开，提示无法验证开发者 → 点「完成」；
+3. 打开「系统设置 → 隐私与安全性」，拉到最底下，点「仍要打开」，再确认一次。
+
+只需要放行这一次。若仍提示「已损坏」，在终端执行
+`xattr -dr com.apple.quarantine /Applications/Cclock.app` 后再打开。
+
+Mac 版的几处不同：
+
+- **没有程序坞图标**，操作入口是屏幕右上角菜单栏里的图标；
+- 全局快捷键 `Alt+B` 在 Mac 上就是 `Option+B`；
+- 开机自启会加进「系统设置 → 通用 → 登录项」，首次可能收到系统通知；
+- 数据在 `~/Library/Application Support/Cclock/data.json`。
 
 ---
 

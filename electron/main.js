@@ -55,6 +55,15 @@ function bootstrap() {
   app.commandLine.appendSwitch('disable-backgrounding-occluded-windows');
 
   app.whenReady().then(() => {
+    // macOS：给一个只含编辑菜单的应用菜单，输入框里的 ⌘C / ⌘V / ⌘A 才能用。
+    // Mac 版不进程序坞（LSUIElement），这个菜单栏本身不会显示。
+    if (process.platform === 'darwin') {
+      Menu.setApplicationMenu(Menu.buildFromTemplate([
+        { role: 'appMenu' },
+        { role: 'editMenu' },
+        { role: 'windowMenu' },
+      ]));
+    }
     store = new Store();
     store.load();
 
@@ -185,7 +194,13 @@ function hideWindow() {
   }
 }
 
+// Mac 版不在程序坞里，窗口默认不会跑到最前面，得显式抢一下焦点
+function focusApp() {
+  if (process.platform === 'darwin') app.focus({ steal: true });
+}
+
 function revealWindow() {
+  focusApp();
   if (!win) {
     createWindow();
     return;
@@ -230,6 +245,7 @@ function ensureOnScreen() {
 /* ------------------------------------------------------------------ */
 
 function openSettings() {
+  focusApp();
   if (settingsWin && !settingsWin.isDestroyed()) {
     settingsWin.show();
     settingsWin.focus();
@@ -391,7 +407,8 @@ function trayImage(withDot) {
   const p = path.join(__dirname, '..', 'build', withDot ? 'tray-alert.png' : 'tray.png');
   if (fs.existsSync(p)) {
     const img = nativeImage.createFromPath(p);
-    if (!img.isEmpty()) return img;
+    // 托盘图是 32px；macOS 菜单栏按原尺寸画会很大，缩到 18pt
+    if (!img.isEmpty()) return process.platform === 'darwin' ? img.resize({ width: 18, height: 18 }) : img;
   }
   return iconImage();
 }

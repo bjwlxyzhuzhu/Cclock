@@ -246,6 +246,10 @@ function main() {
   fs.writeFileSync(path.join(OUT, 'tray.png'), encodePng(draw(32), 32));
   fs.writeFileSync(path.join(OUT, 'tray-alert.png'), encodePng(draw(32, { dot: true }), 32));
 
+  // macOS 应用图标：electron-builder 要求至少 512px 的 PNG，构建时自动转成 icns。
+  // 不画 1024 —— 4 倍超采样下那要 500 多 MB 内存。
+  fs.writeFileSync(path.join(OUT, 'icon.png'), encodePng(draw(512), 512));
+
   console.log('图标已生成到', OUT);
 }
 
