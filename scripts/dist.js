@@ -112,7 +112,9 @@ function main() {
 
   const res = spawnSync(
     path.join(cwd, 'node_modules', '.bin', 'electron-builder.cmd'),
-    [`--config.directories.output=${outDir}`],
+    // --publish never：在 GitHub Actions 的标签构建里，electron-builder 默认会尝试
+    // 发布到 GitHub 并要求令牌；发布由工作流的 release 任务统一做，这里只打包
+    [`--config.directories.output=${outDir}`, '--publish', 'never'],
     {
       cwd,
       stdio: 'inherit',
