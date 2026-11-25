@@ -4,7 +4,7 @@
 
 **完全离线**：没有后端、没有数据库、不发任何网络请求。
 
-- 版本：1.2.1
+- 版本：1.2.2
 - 开发者：**AI创赛贯通社**
 - 平台：Windows 10 / 11（x64）· macOS 12 及以上（Apple 芯片与 Intel）
 - 实现依据：[PRD.md](PRD.md)
@@ -53,9 +53,9 @@ Cclock 的第一性原则：
 
 ### Windows
 
-下载 [`Cclock-1.2.1-setup.exe`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.1/Cclock-1.2.1-setup.exe)，然后：
+下载 [`Cclock-1.2.2-setup.exe`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.2/Cclock-1.2.2-setup.exe)，然后：
 
-1. 双击 `Cclock-1.2.1-setup.exe`
+1. 双击 `Cclock-1.2.2-setup.exe`
 2. 选择安装目录（默认 `%LOCALAPPDATA%\Programs\Cclock`），**不需要管理员权限**
 3. 安装完成后自动启动，并在桌面和开始菜单创建快捷方式
 
@@ -70,8 +70,8 @@ Cclock 的第一性原则：
 
 | 文件 | 适用 |
 | --- | --- |
-| [`Cclock-1.2.1-mac-arm64.dmg`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.1/Cclock-1.2.1-mac-arm64.dmg) | Apple 芯片（M1 / M2 / M3 / M4） |
-| [`Cclock-1.2.1-mac-x64.dmg`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.1/Cclock-1.2.1-mac-x64.dmg) | Intel 芯片 |
+| [`Cclock-1.2.2-mac-arm64.dmg`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.2/Cclock-1.2.2-mac-arm64.dmg) | Apple 芯片（M1 / M2 / M3 / M4） |
+| [`Cclock-1.2.2-mac-x64.dmg`](https://github.com/bjwlxyzhuzhu/Cclock/releases/download/v1.2.2/Cclock-1.2.2-mac-x64.dmg) | Intel 芯片 |
 
 不确定是哪种：左上角苹果菜单 →「关于本机」，「芯片」一栏写 Apple M 开头的选 arm64，写 Intel 的选 x64。
 
